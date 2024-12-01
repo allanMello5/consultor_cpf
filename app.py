@@ -12,26 +12,42 @@ pagina_clientes = planilha_clientes['Sheet1']
 driver = webdriver.Chrome()
 driver.get('http://localhost:52330/cpf_test_site/cpf.html')
 
+
 for linha in pagina_clientes.iter_rows(min_row=2, values_only=True):
     nome, valor, cpf, vencimento = linha  
     sleep(5)
     campo_pesquisa = driver.find_element(By.XPATH,"//input[@id='cpfInput']")
     sleep(1)
+    campo_pesquisa.clear()
     campo_pesquisa.send_keys(cpf)
     sleep(2)
     #vericar se esta em  dia ou atrasado
-    botao_pesquisar = driver.find_element(By.XPATH,"//button[@class='']")
+    botao_pesquisar = driver.find_element(By.XPATH,"//button[@id='button']")
     sleep(1)
     botao_pesquisar.click()
     sleep(4)
     #4 se estiver em dia , pegar data do pagamento e o metodo de pagamento
     status = driver.find_element(By.XPATH,"//span[@id='statusLabel']")
     status.text
+
+
     if status.text =='em dia':
         data_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentDate']")
-        metodo_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentMehod']")
+        metodo_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentMethod']")
 
-        pagina_fechamento.append([nome, valor, cpf , vencimento, 'em dia', 'xxx','xxx' ])
+        data_pagamento_limpo = data_pagamento.text.split()[3]
+        metodo_pagamento_limpo = metodo_pagamento.text.split()[3]
+
+        planilha_fechamento = openpyxl.load_workbook('planilha_fechamento.xlsx')
+        pagina_fechamento = planilha_fechamento['Planilha1']
+        
+
+        pagina_fechamento.append([nome, valor, cpf , vencimento, 'em dia',
+        data_pagamento_limpo, metodo_pagamento ])
+
+        planilha_fechamento.save('planilha_fechamento.xlsx')
+
+
     else:
         planilha_fechamento = openpyxl.load_workbook('planilha fechamento.xlsx')
         pagina_fechamento = planilha_fechamento['Planilha1']
