@@ -10,7 +10,7 @@ pagina_clientes = planilha_clientes['Sheet1']
 
  # 2 entrar no site e usar o cpf para pesquisar o stuatus do pagamento daquele cliente. #2entro no site 10909090e9 para pesquisar o status do pagamento  daquele cliente
 driver = webdriver.Chrome()
-driver.get('http://localhost:52330/cpf.html')
+driver.get('http://localhost:52330/cpf_test_site/cpf.html')
 
 for linha in pagina_clientes.iter_rows(min_row=2, values_only=True):
     nome, valor, cpf, vencimento = linha  
@@ -28,8 +28,12 @@ for linha in pagina_clientes.iter_rows(min_row=2, values_only=True):
     status = driver.find_element(By.XPATH,"//span[@id='statusLabel']")
     status.text
     if status.text =='em dia':
-        data_pagamento = driver.find_element(By.XPATH"//p[@id='paymentDate']")
-        metodo_pagamento = driver.find_element(By.XPATH"//p[@id='paymentMehod']")
+        data_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentDate']")
+        metodo_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentMehod']")
+
+        pagina_fechamento.append([nome, valor, cpf , vencimento, 'em dia', 'xxx','xxx' ])
     else:
         planilha_fechamento = openpyxl.load_workbook('planilha fechamento.xlsx')
-        planilha_fechamento = planilha_fechamento['Planilha1']
+        pagina_fechamento = planilha_fechamento['Planilha1']
+        
+        pagina_fechamento.append([nome, valor, cpf, vencimento,'pendente' ])
