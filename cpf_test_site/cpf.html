@@ -7,18 +7,16 @@
     <link rel="stylesheet" href="cpf.css"/>
 </head>
 <body>
-    <div class="container">
-        <form id="consultaForm">
+    <div id="resultado" class="container">
          <h2>Consulta CPF</h2>
          <label for="cpfInput">Digite o CPF:</label>
          <input type="text" id="cpfInput" placeholder="Ex: 123.456.789-00" maxlength="14">
          <button  type="submit" validarCPF()" id="button">Consultar</button>
+         <p>Status</p>
          <p id="mensagem"></p>
-        </form>
-        <span id="statusLabel">em dia</span>
-        <p id="paymentDate" class="">Data do pagamento 01/12/2024</p>
-        <p id="paymentMethod" class="">Método de pagamento boleto</p>
-
+        <span id="statusLabel"></span>
+        <p id="paymentDate" class=""></p>
+        <p id="paymentMethod" class=""></p>
     </div>
 
     <script type="text/javascript" src="cpf.js"></script>
