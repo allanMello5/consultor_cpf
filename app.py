@@ -27,13 +27,13 @@ for linha in pagina_clientes.iter_rows(min_row=2, values_only=True):
     botao_pesquisar.click()
     sleep(4)
     #4 se estiver em dia , pegar data do pagamento e o metodo de pagamento
-    status = driver.find_element(By.XPATH,"//span[@id='statusLabel']")
+    status = driver.find_element(By.XPATH,"//label[@id='statusLabel']")
     status.text
 
 
     if status.text =='em dia':
-        data_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentDate']")
-        metodo_pagamento = driver.find_element(By.XPATH,"//p[@id='paymentMethod']")
+        data_pagamento = driver.find_element(By.XPATH,"//label[@id='paymentDate']")
+        metodo_pagamento = driver.find_element(By.XPATH,"//label[@id='paymentMethod']")
 
         data_pagamento_limpo = data_pagamento.text.split()[3]
         metodo_pagamento_limpo = metodo_pagamento.text.split()[3]
